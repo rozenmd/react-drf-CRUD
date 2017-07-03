@@ -1,13 +1,14 @@
 import os
+PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
+PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
+PROJECT_ROOT = BASE_DIR = os.path.dirname(PROJECT_APP_PATH)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = '123'  # os.environ.get('DJANGO_SECRET_KEY')
+DEBUG = False
 
-DEBUG = os.environ.get('DEBUG', 'on') == 'on'
 
 ALLOWED_HOSTS = []
-
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -16,10 +17,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #third party apps
+    # third party apps
     'rest_framework',
     'webpack_loader',
-    #local apps
+    # local apps
     'api',
 )
 
@@ -55,7 +56,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'drf_react.wsgi.application'
 
 ####
-#DATABASE
+# DATABASE
 ####
 
 DATABASES = {
@@ -66,7 +67,7 @@ DATABASES = {
 }
 
 ####
-#INTERNATIONALIZATION
+# INTERNATIONALIZATION
 ####
 
 LANGUAGE_CODE = 'en-us'
@@ -80,22 +81,32 @@ USE_L10N = True
 USE_TZ = True
 
 ####
-#STATIC FILES
+# STATIC FILES
 ####
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'assets'),
 )
 
 ####
-#WEBPACK
+# WEBPACK
 ####
 
 WEBPACK_LOADER = {
-	'DEFAULT': {
-	'BUNDLE_DIR_NAME': 'bundles/',
-	'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-	}
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
 }
+
+f = os.path.join(PROJECT_APP_PATH, "local_settings.py")
+if os.path.exists(f):
+    import sys
+    import imp
+    module_name = "%s.local_settings" % PROJECT_APP
+    module = imp.new_module(module_name)
+    module.__file__ = f
+    sys.modules[module_name] = module
+    exec(open(f, "rb").read())
