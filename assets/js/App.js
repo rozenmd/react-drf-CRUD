@@ -33,7 +33,11 @@ class BooksList extends Component {
         } = this.props;
 
         let bookNodes = this.state.data.map(function (book) {
-            return <li>{book.title}</li>
+            return <li key={book.title}>
+                Title: {book.title} <br/>
+                Author: {book.author}
+            </li>
+
         });
 
         return (
