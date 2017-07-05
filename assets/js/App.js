@@ -31,17 +31,16 @@ class BooksList extends Component {
         const {
             pollInterval
         } = this.props;
-        if (this.state.data) {
-            console.log("DATA WOO");
-            const bookNodes = this.state.data.map(function (book) {
-                return <li>{book.title}</li>
-            })
-        }
+
+        let bookNodes = this.state.data.map(function (book) {
+            return <li>{book.title}</li>
+        });
+
         return (
             <div>
                 <h1>Hello React!</h1>
                 <ul>
-                    {this.data}
+                    {bookNodes}
                 </ul>
             </div>
         )
