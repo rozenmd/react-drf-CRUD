@@ -12,14 +12,13 @@ class BooksList extends Component {
     }
 
     loadBooksFromServer() {
-        $.ajax({
-            url: this.props.url,
-            datatype: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({data: data});
-            }.bind(this)
-        })
+        fetch(this.props.url)
+            .then((response) => {
+                return response.json()
+            })
+            .then((json) => {
+                this.setState({data: json});
+            });
     }
 
     componentDidMount() {
